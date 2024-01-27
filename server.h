@@ -28,9 +28,9 @@ struct Command {
     std::string input;
 };
 
-class NATSServer {
+class Server {
 public:
-    NATSServer();
+    Server();
 
     void Start();
     void HandleClient(int client_socket_fd);

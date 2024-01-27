@@ -1,5 +1,3 @@
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <iostream>
 #include <cstring>
 #include <string>
@@ -35,7 +33,6 @@ public:
         std::string topic, subCommand;
 
         iss >> subCommand >> topic;
-        std::cout << "Topic: " << topic << std::endl;
         return topic;
     }
 };

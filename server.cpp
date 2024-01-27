@@ -1,6 +1,6 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include "nats_server.h"
+#include "server.h"
 #include <string>
 #include <cstring>
 #include <unistd.h>
@@ -9,7 +9,7 @@
 #include "parser.h"
 #include "handlers.h"
 
-NATSServer::NATSServer() {
+Server::Server() {
     sock_fd_ = socket(AF_INET, SOCK_STREAM, 0);
     if (sock_fd_ == -1) {
         std::cerr << "Error creating socket\n";
@@ -29,19 +29,19 @@ NATSServer::NATSServer() {
     listen(sock_fd_, 10);
 }
 
-void NATSServer::Start() {
+void Server::Start() {
     while (true) {
         int client_socket_fd = accept(sock_fd_, NULL, NULL);
         if (client_socket_fd == -1) {
             std::cerr << "Error accepting connection\n";
             return;
         }
-        std::thread client_thread(&NATSServer::HandleClient, this, client_socket_fd);
+        std::thread client_thread(&Server::HandleClient, this, client_socket_fd);
         client_thread.detach();
     }
 }
 
-void NATSServer::HandleClient(int client_socket_fd) {
+void Server::HandleClient(int client_socket_fd) {
     struct sockaddr_in clientAddr;
     socklen_t clientAddrLen = sizeof(clientAddr);
 

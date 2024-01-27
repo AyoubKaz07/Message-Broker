@@ -1,8 +1,6 @@
 #pragma once
 
-#include "nats_server.h"
-#include <sys/socket.h>
-#include <netinet/in.h>
+#include "server.h"
 #include <iostream>
 #include <cstring>
 #include <string>

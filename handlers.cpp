@@ -35,7 +35,7 @@ void PubCommandHandler::Handle(int client_socket_fd, std::vector<Subscription>& 
     if (bytes_read <= 0) {
         // Client has closed the connection
         std::cout << "Client disconnected\n";
-        // TODO: Remove the client from the subscribers list
+        // TODO: Remove the client from the subscribers list and close the socket maybe ?
         return;
     }
 
