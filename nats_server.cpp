@@ -5,6 +5,7 @@
 #include <cstring>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <thread>
 #include "parser.h"
 #include "handlers.h"
 
@@ -35,7 +36,8 @@ void NATSServer::Start() {
             std::cerr << "Error accepting connection\n";
             return;
         }
-        HandleClient(client_socket_fd);
+        std::thread client_thread(&NATSServer::HandleClient, this, client_socket_fd);
+        client_thread.detach();
     }
 }
 
@@ -43,6 +45,7 @@ void NATSServer::HandleClient(int client_socket_fd) {
     struct sockaddr_in clientAddr;
     socklen_t clientAddrLen = sizeof(clientAddr);
 
+    // Print client IP
     char clientIP[INET_ADDRSTRLEN];
     if (getpeername(client_socket_fd, (struct sockaddr*)&clientAddr, &clientAddrLen) == 0) {
         inet_ntop(AF_INET, &(clientAddr.sin_addr), clientIP, INET_ADDRSTRLEN);
