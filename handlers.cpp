@@ -1,5 +1,6 @@
 #include "handlers.h"
 #include <algorithm>
+#include <thread>
 
 void SubCommandHandler::Handle(int client_socket_fd, std::vector<Subscription>& subscribers) {
     // Check if the client is already subscribed to the topic
@@ -18,6 +19,9 @@ void SubCommandHandler::Handle(int client_socket_fd, std::vector<Subscription>& 
     Subscription newSubscription{client_socket_fd, topic_};
     subscribers.push_back(newSubscription);
     
+    // For testing purpose
+    // std::this_thread::sleep_for(std::chrono::seconds(3)); // Sleep for 3 seconds
+
     ack_message_ = "+OK\n";
 }
 

@@ -73,6 +73,8 @@ void Server::HandleClient(int client_socket_fd) {
         auto command_handler = CommandParser::parse(command);
         if (command_handler) {
             command_handler->Handle(client_socket_fd, subscribers_);
+            // std::cout << "Thread number: " << std::this_thread::get_id() << std::endl;
+            // std::cout << "Subscribers size: " << subscribers_.size() << std::endl;
             send(client_socket_fd, command_handler->GetMessage().c_str(), command_handler->GetMessage().size(), 0);
         }
     }
